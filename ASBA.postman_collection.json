@@ -1,0 +1,1239 @@
+{
+	"info": {
+		"_postman_id": "47fc6d37-0083-4e22-bfd3-b17bdd5d7fb1",
+		"name": "ASBA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CASBA",
+			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var headerValue = pm.response.headers.get(\"Authorization\");\r",
+									"pm.collectionVariables.set(\"tokenCASBA\", headerValue);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"B-1901\",\r\n    \"password\": \"admin1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://172.16.0.48:5080/casba-admin-web/api/admin/auth/",
+							"protocol": "http",
+							"host": [
+								"172",
+								"16",
+								"0",
+								"48"
+							],
+							"port": "5080",
+							"path": [
+								"casba-admin-web",
+								"api",
+								"admin",
+								"auth",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{tokenCASBA}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"passwordSetUp\": {\r\n        \"pwdDeliveryType\": \"SET_NOW\",\r\n        \"password\": \"12345\",\r\n        \"confirmPassword\": \"12345\"\r\n    },\r\n    \"clientId\": 14,\r\n    \"name\": \"tress\",\r\n    \"username\": \"{{$randomFirstName}}\",\r\n    \"email\": \"xylo.shr@gmail.com\",\r\n    \"contact\": \"9861484293\",\r\n    \"address\": \"kapan\",\r\n    \"profileId\": \"3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://172.16.0.48:5080/casba-admin-web/api/bankAdmin/",
+							"protocol": "http",
+							"host": [
+								"172",
+								"16",
+								"0",
+								"48"
+							],
+							"port": "5080",
+							"path": [
+								"casba-admin-web",
+								"api",
+								"bankAdmin",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json();\r",
+									"pm.collectionVariables.set(\"CreateUsernameCASBA\", responseJson.object[responseJson.object.length-1].username);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{tokenCASBA}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"filterFieldParams\": [\r\n        {\r\n            \"key\": \"username\"\r\n        },\r\n        {\r\n            \"key\": \"adminProfile.name\",\r\n            \"value\": \"\",\r\n            \"condition\": \"=\"\r\n        },\r\n        {\r\n            \"key\": \"client.name\",\r\n            \"value\": \"\"\r\n        },\r\n        {\r\n            \"key\": \"branch.name\",\r\n            \"value\": \"\"\r\n        }\r\n    ],\r\n    \"page\": 1,\r\n    \"size\": 200,\r\n    \"searchRoleViewConstants\": \"VIEW_MANAGE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://172.16.0.48:5080/casba-admin-web/api/bankAdmin/search",
+							"protocol": "http",
+							"host": [
+								"172",
+								"16",
+								"0",
+								"48"
+							],
+							"port": "5080",
+							"path": [
+								"casba-admin-web",
+								"api",
+								"bankAdmin",
+								"search"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin Login",
+			"item": [
+				{
+					"name": "Login admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									" var headerValue = pm.response.headers.get(\"Authorization\");\r",
+									"pm.collectionVariables.set(\"token\", headerValue);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/authenticate",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin Management",
+			"item": [
+				{
+					"name": "Create admin",
+					"item": [
+						{
+							"name": "Positive",
+							"item": [
+								{
+									"name": "Create admin",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"firstName\": \"Henry\",\r\n    \"middleName\": \"Rae Glass\",\r\n    \"lastName\": \"Fuller\",\r\n    \"username\": \"{{$randomFirstName}}\",\r\n    \"gender\": \"Other\",\r\n    \"email\": \"xylo.shr@gmail.com\",\r\n    \"mobileNumber\": \"9849492550\",\r\n    \"address\": \"kapan\",\r\n    \"deliveryTypeModel\": {\r\n        \"deliveryType\": \"SET_NOW\",\r\n        \"newPassword\": \"12345678\",\r\n        \"confirmPassword\": \"12345678\"\r\n    },\r\n    \"casbaUsername\": \"{{CreateUsernameCASBA}}\",\r\n    \"role\": 2,\r\n    \"adminType\": \"Central Admin\",\r\n    \"isDefaultCentralAdmin\": false,\r\n    \"isDefaultBranchAdmin\": false\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/admin",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"admin"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "View admin",
+					"item": [
+						{
+							"name": "Positive",
+							"item": [
+								{
+									"name": "View admin",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var responseJson = pm.response.json();\r",
+													"pm.collectionVariables.set(\"adminId\", responseJson.data.objectList[0].id);\r",
+													"pm.collectionVariables.set(\"username\", responseJson.data.objectList[0].username);\r",
+													"pm.collectionVariables.set(\"casbaUsername\", responseJson.data.objectList[0].casbaUsername);\r",
+													"pm.collectionVariables.set(\"statusDescription\", responseJson.data.objectList[0].statusDescription);\r",
+													"pm.collectionVariables.set(\"fullName\", responseJson.data.objectList[0].fullName);\r",
+													"\r",
+													"pm.collectionVariables.set(\"adminType\", responseJson.data.objectList[0].adminType);\r",
+													"\r",
+													"pm.collectionVariables.set(\"isDefaultCentralAdmin\", responseJson.data.objectList[0].isDefaultCentralAdmin.toString());\r",
+													"pm.collectionVariables.set(\"isDefaultBranchAdmin\", responseJson.data.objectList[0].isDefaultBranchAdmin.toString());\r",
+													"//pm.collectionVariables.set('Response', typeof  responseJson.data.objectList[0].isDefaultCentralAdmin)"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"page\": 0,\r\n    \"size\": 2,\r\n    \"fromDate\": null,\r\n    \"toDate\": null,\r\n    \"search\": [],\r\n    \"searchViewConstant\": \"VIEW_MANAGE\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/admin/search",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"admin",
+												"search"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Search Admin",
+					"item": [
+						{
+							"name": "Positive",
+							"item": [
+								{
+									"name": "Search Admin",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"page\": 0,\r\n    \"size\": 2,\r\n    \"fromDate\": null,\r\n    \"toDate\": null,\r\n    \"search\": [\r\n        {\r\n            \"key\": \"username\",\r\n            \"value\": \"{{username}}\"\r\n        },\r\n        {\r\n            \"key\": \"casbaUsername\",\r\n            \"value\": \"{{casbaUsername}}\"\r\n        },\r\n        {\r\n            \"key\": \"fullName\",\r\n            \"value\": \"{{fullName}}\"\r\n        },\r\n        {\r\n            \"key\": \"status\",\r\n            \"value\": \"{{statusDescription}}\"\r\n        }\r\n    ],\r\n    \"searchViewConstant\": \"VIEW_MANAGE\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/admin/search",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"admin",
+												"search"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Edit admin",
+					"item": [
+						{
+							"name": "Edit Admin",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGhvcml0aWVzIjpbeyJhdXRob3JpdHkiOiJDUkVBVEVfQURNSU4ifSx7ImF1dGhvcml0eSI6IlZJRVdfUk9MRSJ9LHsiYXV0aG9yaXR5IjoiRURJVF9CQVRDSF9TQ0hFRFVMRVJfU0VUVElORyJ9LHsiYXV0aG9yaXR5IjoiQkxPQ0tfQURNSU4ifSx7ImF1dGhvcml0eSI6IlVOQkxPQ0tfQU1PVU5UIn0seyJhdXRob3JpdHkiOiJERUxFVEVfQURNSU4ifSx7ImF1dGhvcml0eSI6IlZJRVdfQkFUQ0hfU0NIRURVTEVSX1NFVFRJTkcifSx7ImF1dGhvcml0eSI6IkJMT0NLX0FNT1VOVCJ9LHsiYXV0aG9yaXR5IjoiVU5CTE9DS19BRE1JTiJ9LHsiYXV0aG9yaXR5IjoiQkFUQ0hfU0NIRURVTEVSX1NFVFRJTkcifSx7ImF1dGhvcml0eSI6IlBBU1NXT1JEX1BPTElDWSJ9LHsiYXV0aG9yaXR5IjoiQ1VTVE9NRVIifSx7ImF1dGhvcml0eSI6IkFETUlOIn0seyJhdXRob3JpdHkiOiJBRERfQ09NUEFOWSJ9LHsiYXV0aG9yaXR5IjoiQ0hBUkdFIn0seyJhdXRob3JpdHkiOiJFRElUX0NPTVBBTlkifSx7ImF1dGhvcml0eSI6IkNPTkZJR1VSQVRJT04ifSx7ImF1dGhvcml0eSI6IkFQUFJPVkVfT1JfRElTQVBQUk9WRV9BRE1JTiJ9LHsiYXV0aG9yaXR5IjoiRURJVF9ST0xFIn0seyJhdXRob3JpdHkiOiJST0xFX1NVUEVSX0FETUlOIn0seyJhdXRob3JpdHkiOiJDT01QQU5ZIn0seyJhdXRob3JpdHkiOiJFRElUX0FETUlOIn0seyJhdXRob3JpdHkiOiJERUxFVEVfUk9MRSJ9LHsiYXV0aG9yaXR5IjoiTUVUQVRBQkxFIn0seyJhdXRob3JpdHkiOiJDUkVBVEVfUk9MRSJ9LHsiYXV0aG9yaXR5IjoiUk9MRVMifSx7ImF1dGhvcml0eSI6IlZJRVdfQURNSU4ifV0sImlkIjoxLCJpYXQiOjE2NDY5MDQyNzMsImV4cCI6MTY0NjkwNTE3NH0.-vQSGQnKqn6xWsQ3S8ynDxBJFrlwmEn-saIkSZsCMuIGEbGvvzgkHFVucqi4nONFe5U7AMEouy5uyuumuIMjeQ",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": {{adminId}},\r\n    \"adminType\": \"{{adminType}}\",\r\n    \"casbaUsername\": \"{{casbaUsername}}\",\r\n    \"firstName\": \"{{$randomFirstName}}\",\r\n    \"middleName\": \"Iola Camerons\",\r\n    \"lastName\": \"Stephenss\",\r\n    \"username\": \"{{username}}\",\r\n    \"email\": \"{{$randomEmail}}\",\r\n    \"mobileNumber\": 9849492550,\r\n    \"address\": \"kapan\",\r\n    \"gender\": \"Female\",\r\n    \"role\": 3,\r\n    \"isDefaultCentralAdmin\": {{isDefaultCentralAdmin}},\r\n    \"isDefaultBranchAdmin\": {{isDefaultBranchAdmin}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/admin/update",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"update"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Block Admin",
+					"item": [
+						{
+							"name": "Block admin",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": {{adminId}},\r\n    \"reason\": \"block\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/admin/block",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"block"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Unblock Admin",
+					"item": [
+						{
+							"name": "Positive",
+							"item": [
+								{
+									"name": "Unblock admin",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": {{adminId}},\r\n    \"reason\": \"unblock\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/admin/unblock",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"admin",
+												"unblock"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Delete Admin",
+					"item": [
+						{
+							"name": "Positive",
+							"item": [
+								{
+									"name": "Delete admin",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": {{adminId}},\r\n    \"reason\": \"delete\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/admin/delete",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"admin",
+												"delete"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Role Management",
+			"item": [
+				{
+					"name": "Create role",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//var responseJson = pm.response.json();\r",
+									"//pm.collectionVariables.set(\"roleId\", responseJson.data.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"roleName\": \"{{$randomFirstName}}\",\r\n    \"description\": \"{{$randomLoremSentence}}\",\r\n    \"selectedAuthorities\": [\r\n        \"ADMIN\",\r\n        \"CREATE_ADMIN\",\r\n        \"VIEW_ADMIN\",\r\n        \"EDIT_ADMIN\",\r\n        \"APPROVE_OR_DISAPPROVE_ADMIN\",\r\n        \"DELETE_ADMIN\",\r\n        \"BLOCK_ADMIN\",\r\n        \"UNBLOCK_ADMIN\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/roles/create",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"roles",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View role",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json();\r",
+									"pm.collectionVariables.set(\"roleId\", responseJson.data[responseJson.data.length-1].id);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/roles/find",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"roles",
+								"find"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit role",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": {{roleId}},\r\n    \"roleName\": \"{{$randomFirstName}}\",\r\n    \"description\": \"{{$randomLoremSentence}}\",\r\n    \"selectedAuthorities\": [\r\n        \"ADMIN\",\r\n        \"CREATE_ADMIN\",\r\n        \"VIEW_ADMIN\",\r\n        \"EDIT_ADMIN\",\r\n        \"APPROVE_OR_DISAPPROVE_ADMIN\",\r\n        \"DELETE_ADMIN\",\r\n        \"BLOCK_ADMIN\",\r\n        \"UNBLOCK_ADMIN\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/roles/update",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"roles",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete role",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": {{roleId}},\r\n    \"reason\": \"defsd\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/roles/delete",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"roles",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Company management",
+			"item": [
+				{
+					"name": "Add company",
+					"item": [
+						{
+							"name": "View company shareId",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var responseJson = pm.response.json();\r",
+											"pm.collectionVariables.set(\"companyShareId\", responseJson.data[0].companyShareId);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://10.13.194.204:8080/admin/company",
+									"protocol": "http",
+									"host": [
+										"10",
+										"13",
+										"194",
+										"204"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"company"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "view company detail",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var responseJson = pm.response.json();\r",
+											"\r",
+											"pm.collectionVariables.set(\"isin\", responseJson.data.isin);\r",
+											"pm.collectionVariables.set(\"scrip\", responseJson.data.scrip);\r",
+											"pm.collectionVariables.set(\"companyName\", responseJson.data.companyName);\r",
+											"pm.collectionVariables.set(\"companyCode\", responseJson.data.companyCode);\r",
+											"\r",
+											"pm.collectionVariables.set(\"issueType\", responseJson.data.issueType);\r",
+											"\r",
+											"pm.collectionVariables.set(\"shareGroupName\", responseJson.data.shareGroupName);\r",
+											"pm.collectionVariables.set(\"subGroup\", responseJson.data.subGroup);\r",
+											"pm.collectionVariables.set(\"minUnit\", responseJson.data.minUnit);\r",
+											"pm.collectionVariables.set(\"maxUnit\", responseJson.data.maxUnit);\r",
+											"\r",
+											"pm.collectionVariables.set(\"multipleOf\", responseJson.data.multipleOf);\r",
+											"pm.collectionVariables.set(\"sharePerUnit\", responseJson.data.sharePerUnit);\r",
+											"pm.collectionVariables.set(\"shareValue\", responseJson.data.shareValue);\r",
+											"pm.collectionVariables.set(\"minIssueOpenDate\", responseJson.data.minIssueOpenDate);\r",
+											"pm.collectionVariables.set(\"maxIssueCloseDate\", responseJson.data.maxIssueCloseDate);\r",
+											"pm.collectionVariables.set(\"clientName\", responseJson.data.clientName);\r",
+											"pm.collectionVariables.set(\"changeDetected\", responseJson.data.changeDetected.toString());"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://10.13.194.204:8080/admin/company/detail/{{companyShareId}}",
+									"protocol": "http",
+									"host": [
+										"10",
+										"13",
+										"194",
+										"204"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"company",
+										"detail",
+										"{{companyShareId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Company",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"companyShareId\": {{companyShareId}},\r\n    \"scrip\": \"{{scrip}}\",\r\n    \"companyName\": \"{{companyName}}\",\r\n    \"companyCode\": \"{{companyCode}}\",\r\n    \"issueType\": \"{{issueType}}\",\r\n    \"shareGroupName\": \"{{shareGroupName}}\",\r\n    \"subGroup\": \"{{subGroup}}\",\r\n    \"maxUnit\": {{maxUnit}},\r\n    \"minUnit\": {{minUnit}},\r\n    \"multipleOf\": {{multipleOf}},\r\n    \"sharePerUnit\": {{sharePerUnit}},\r\n    \"shareValue\": {{shareValue}},\r\n    \"minIssueOpenDate\": \"{{minIssueOpenDate}}\",\r\n    \"maxIssueCloseDate\": \"{{maxIssueCloseDate}}\",\r\n    \"clientName\": \"{{clientName}}\",\r\n    \"isin\": \"{{isin}}\",\r\n    \"issueManagerAccountNumber\": \"12345\",\r\n    \"isEnabled\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://10.13.194.204:8080/admin/company",
+									"protocol": "http",
+									"host": [
+										"10",
+										"13",
+										"194",
+										"204"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"company"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Edit company",
+					"item": [
+						{
+							"name": "View companyId",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var responseJson = pm.response.json();\r",
+											"pm.collectionVariables.set(\"companyId\", responseJson.data.objectList[0].id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"page\": 0,\r\n    \"size\": 2,\r\n    \"search\": [],\r\n    \"searchViewConstant\": \"VIEW\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://10.13.194.204:8080/admin/company/search",
+									"protocol": "http",
+									"host": [
+										"10",
+										"13",
+										"194",
+										"204"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"company",
+										"search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit company",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": {{companyId}},\r\n    \"issueManagerAccountNumber\": \"{{$randomBankAccount}}\",\r\n    \"isEnabled\": {{$randomBoolean}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://10.13.194.204:8080/admin/company/update",
+									"protocol": "http",
+									"host": [
+										"10",
+										"13",
+										"194",
+										"204"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"company",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "View company",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://10.13.194.204:8080/admin/company/{{companyId}}",
+									"protocol": "http",
+									"host": [
+										"10",
+										"13",
+										"194",
+										"204"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"company",
+										"{{companyId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "ASBA Charge",
+			"item": [
+				{
+					"name": "ASBA charge update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"chargeAmount\": \"20\",\r\n    \"chargeAccountNumber\": \"{{$randomBankAccount}}\",\r\n    \"chargeEnabled\": {{$randomBoolean}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.13.194.204:8080/admin/charge/update",
+							"protocol": "http",
+							"host": [
+								"10",
+								"13",
+								"194",
+								"204"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"charge",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Metatable",
+			"item": [
+				{
+					"name": "Password attempt",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 19,\r\n    \"fieldName\": \"MAXIMUM_PASSWORD_ATTEMPT_LIMIT\",\r\n    \"fieldValue\": \"{{$randomInt}}\",\r\n    \"description\": \"FOR MAXIMUM PASSWORD ATTEMPT LIMIT\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://10.13.194.204:8080/admin/metatable/update",
+							"protocol": "http",
+							"host": [
+								"10",
+								"13",
+								"194",
+								"204"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"metatable",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Block amount",
+			"item": [
+				{
+					"name": "Search",
+					"item": [
+						{
+							"name": "ViewId",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var responseJson = pm.response.json();\r",
+											"pm.collectionVariables.set(\"downloadFile\", responseJson.data.objectList[0].downloadFile);\r",
+											"pm.collectionVariables.set(\"companyShareName\", responseJson.data.objectList[0].companyShareName);\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"page\": 0,\r\n    \"size\": 10,\r\n    \"search\": [],\r\n    \"searchViewConstant\": \"VIEW_BLOCK_AMOUNT\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://10.13.194.204:8080/admin/fileRecord/search",
+									"protocol": "http",
+									"host": [
+										"10",
+										"13",
+										"194",
+										"204"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"fileRecord",
+										"search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "search",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"page\": 0,\r\n    \"size\": 10,\r\n    \"search\": [\r\n        {\r\n            \"key\": \"companyName\",\r\n            \"value\": \"{{companyShareName}}\"\r\n        },\r\n        {\r\n            \"key\": \"fileName\",\r\n            \"value\": \"{{downloadFile}}\"\r\n        },\r\n        {\r\n            \"key\": \"status\",\r\n            \"value\": \"\"\r\n        }\r\n    ],\r\n    \"searchViewConstant\": \"VIEW_BLOCK_AMOUNT\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://10.13.194.204:8080/admin/fileRecord/search",
+									"protocol": "http",
+									"host": [
+										"10",
+										"13",
+										"194",
+										"204"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"fileRecord",
+										"search"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Successful request\", function () {      ",
+					"    pm.expect(pm.response.code).to.be.oneOf([200,201]); ",
+					"});"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "anyvalue",
+			"type": "string"
+		},
+		{
+			"key": "baseUrl",
+			"value": "http://10.13.194.204:8080/admin",
+			"type": "string"
+		},
+		{
+			"key": "roleId",
+			"value": "anyvalue",
+			"type": "string"
+		},
+		{
+			"key": "adminId",
+			"value": "anyvalue"
+		},
+		{
+			"key": "adminType",
+			"value": "anyvalue"
+		},
+		{
+			"key": "username",
+			"value": "anyvalue"
+		},
+		{
+			"key": "casbaUsername",
+			"value": "anyvalue"
+		},
+		{
+			"key": "statusDescription",
+			"value": ""
+		},
+		{
+			"key": "fullName",
+			"value": ""
+		},
+		{
+			"key": "isDefaultCentralAdmin",
+			"value": ""
+		},
+		{
+			"key": "isDefaultBranchAdmin",
+			"value": ""
+		},
+		{
+			"key": "tokenCASBA",
+			"value": ""
+		},
+		{
+			"key": "CreateUsernameCASBA",
+			"value": ""
+		},
+		{
+			"key": "companyShareId",
+			"value": ""
+		},
+		{
+			"key": "isin",
+			"value": ""
+		},
+		{
+			"key": "scrip",
+			"value": ""
+		},
+		{
+			"key": "companyName",
+			"value": ""
+		},
+		{
+			"key": "companyCode",
+			"value": ""
+		},
+		{
+			"key": "issueType",
+			"value": ""
+		},
+		{
+			"key": "shareGroupName",
+			"value": ""
+		},
+		{
+			"key": "subGroup",
+			"value": ""
+		},
+		{
+			"key": "minUnit",
+			"value": ""
+		},
+		{
+			"key": "maxUnit",
+			"value": ""
+		},
+		{
+			"key": "multipleOf",
+			"value": ""
+		},
+		{
+			"key": "sharePerUnit",
+			"value": ""
+		},
+		{
+			"key": "shareValue",
+			"value": ""
+		},
+		{
+			"key": "minIssueOpenDate",
+			"value": ""
+		},
+		{
+			"key": "maxIssueCloseDate",
+			"value": ""
+		},
+		{
+			"key": "clientName",
+			"value": ""
+		},
+		{
+			"key": "changeDetected",
+			"value": ""
+		},
+		{
+			"key": "companyId",
+			"value": ""
+		},
+		{
+			"key": "downloadFile",
+			"value": ""
+		},
+		{
+			"key": "companyShareName",
+			"value": ""
+		}
+	]
+}
